@@ -1,8 +1,8 @@
-// import Footer from "./components/Footer";
-// import Header from "./components/Header";
+
 import Main from "./pages/Main";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import DefaultLayout from "./pages/DefaultLayout";
 
 import { useState } from 'react'
 import './App.css'
@@ -15,9 +15,11 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" Component={Home} />
-          <Route path="/posts" Component={Main} />
-          <Route path="/about" Component={About} />
+          <Route Component={DefaultLayout}>
+            <Route path="/" Component={Home} />
+            <Route path="/posts" Component={Main} />
+            <Route path="/about" Component={About} />
+          </Route>
         </Routes>
       </BrowserRouter>
 
