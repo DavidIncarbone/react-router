@@ -23,53 +23,51 @@ const tagsAPI = "http://localhost:3000/tags"
 
 
 function Main() {
-
     const [myPosts, setMyPosts] = useState([]);
     const [newPost, setNewPost] = useState(initialNewPost);
     const [postList, setPostList] = useState([]);
     const [filteredTags, setFilteredTags] = useState([]);
-
     // ***** FUNCTIONS *****
-
     //GET DATA
-
     useEffect(() => {
         getData();
-        getTags()
+        getTags();
+
     }, [])
 
     function getData() {
         axios.get(postsAPI).then((res) => {
             console.log(res.data)
             setMyPosts(res.data.data)
+            console.log(res.data.data)
         })
             .catch((error) => {
                 console.log(error)
             })
     }
 
+
+
     function getTags() {
         axios.get(tagsAPI).then((res) => {
             console.log(res.data)
             setFilteredTags(res.data.data)
-
-
         })
     }
 
     //DELETE
     function deleteItem(id) {
-
         axios.delete(postsAPI + "/" + id);
-        setMyPosts(myPosts.filter((post) => post.id !== id))
-
-
+        // setMyPosts(myPosts.filter((post) => post.id !== id))
+        getData();
     }
     function deleteNewItem(id) {
         axios.delete(postsAPI + "/" + id);
-        setPostList(
-            postList.filter((post) => post.id !== id)
-        )
+        // setPostList(
+        //     postList.filter((post) => post.id !== id)
+        // )
+
+        getData()
     }
 
     //HANDLE
@@ -134,6 +132,7 @@ function Main() {
                         image={post.image}
                         key={self.crypto.randomUUID()}
                         tags={post.tags}
+                        id={post.id}
                         onDelete={() => deleteItem(post.id)}
                     />
                 ))}
@@ -146,6 +145,7 @@ function Main() {
                                 image={post.image}
                                 key={post.id}
                                 tags={post.tags}
+                                id={post.id}
                                 onDelete={() => deleteNewItem(post.id)}
                             />
                         )

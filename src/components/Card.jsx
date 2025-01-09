@@ -1,7 +1,12 @@
 import { useState } from 'react'
 import Button from "./Button";
 import style from "../style/Button.module.css"
-import tagsStyle from "../style/Tags.module.css"
+import tagsStyle from "../style/Tags.module.css";
+import InfoButton from "./InfoButton";
+import { Link } from "react-router-dom";
+
+
+
 
 
 
@@ -36,7 +41,7 @@ function Card({ title, description, image, id, tags, onDelete }) {
                                 tag === "php" && <span key={"php"} className={tagsStyle.red}>{tag}</span>
                             )
                         })}</div>
-
+                        <Link to={"/posts" + "/" + id} className="btn btn-info">info</Link>
                         <button className="bg-primary text-white" onClick={onDelete} >Delete</button></div>
 
                 </div>
