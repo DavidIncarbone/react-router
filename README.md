@@ -38,4 +38,8 @@ rules: {
         { allowConstantExport: true },
       ],
     },
+
+    # install routing
+
+    npm install react-router-dom
 ```

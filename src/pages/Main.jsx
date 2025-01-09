@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Card from "./Card"
+import Card from "../components/Card"
 import axios from "axios";
 
 // ADD POST
