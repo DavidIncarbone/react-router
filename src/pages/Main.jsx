@@ -9,11 +9,11 @@ import axios from "axios";
 const initialNewPost = {
 
     title: "",
-    description: "",
+    content: "",
     image: "",
     category: "",
     tags: [],
-    status: false
+    published: false
 
 };
 
@@ -57,17 +57,8 @@ function Main() {
 
     //DELETE
     function deleteItem(id) {
-        axios.delete(postsAPI + "/" + id);
-        // setMyPosts(myPosts.filter((post) => post.id !== id))
-        getData();
-    }
-    function deleteNewItem(id) {
-        axios.delete(postsAPI + "/" + id);
-        // setPostList(
-        //     postList.filter((post) => post.id !== id)
-        // )
-
-        getData()
+        axios.delete(postsAPI + "/" + id).then(() => getData());
+        //setMyPosts(myPosts.filter((post) => post.id !== id))
     }
 
     //HANDLE
@@ -80,11 +71,15 @@ function Main() {
     }
     function handleSubmit(event) {
         event.preventDefault();
-        axios.post(postsAPI, newPost)
-        setPostList([...postList, newPost]);
-        console.log(newPost)
-        setNewPost(initialNewPost);
-        console.log(postList);
+        axios.post(postsAPI, newPost).then(() => {
+            getData();
+            setNewPost(initialNewPost);
+            document.querySelectorAll('.tag-checkbox').forEach((ch) => {
+                ch.checked = false
+            });
+
+        })
+
     }
     function handleTags(event) {
         setNewPost((newPost) => {
@@ -104,6 +99,7 @@ function Main() {
         handleInput(event);
     };
 
+
     return (
         <main className="d-flex flex-column">
 
@@ -113,47 +109,32 @@ function Main() {
                     {
                         filteredTags.map((tag, index) => {
                             return (
-                                < li key={`card-tag-${index}xxx`}>{tag}</li>
+                                <li key={`card-tag-${index}xxx`}>{tag}</li>
                             )
                         }
                         )
                     }
-
                 </ul>
             </div >
 
             <ul className="d-flex flex-wrap gap-5">
-
-
-                {myPosts.map(post => (
-                    post.published &&
-                    <Card title={post.title}
-                        description={post.content}
-                        image={post.image}
-                        key={self.crypto.randomUUID()}
-                        tags={post.tags}
-                        id={post.id}
-                        onDelete={() => deleteItem(post.id)}
-                    />
-                ))}
-
-                {postList.filter((post) => post.status)
+                {myPosts.filter((post) => post.published)
                     .map((post) => {
                         return (
                             <Card title={post.title}
-                                description={post.description}
+                                description={post.content}
                                 image={post.image}
                                 key={post.id}
                                 tags={post.tags}
                                 id={post.id}
-                                onDelete={() => deleteNewItem(post.id)}
+                                onDelete={() => deleteItem(post.id)}
                             />
                         )
                     })}
             </ul>
             <section className="my-4 ms-4">
                 <h2>Aggiungi nuovo post</h2>
-                <form onSubmit={handleSubmit} className="w-50">
+                <form onSubmit={() => (handleSubmit(event))} className="w-50">
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">
                             Title
@@ -169,17 +150,17 @@ function Main() {
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="description" className="form-label">
+                        <label htmlFor="content" className="form-label">
                             Description
                         </label>
                         <input
                             type="textarea"
                             className="form-control"
-                            id="description"
-                            aria-describedby="descriptionlHelp"
+                            id="content"
+                            aria-describedby="contentlHelp"
                             onChange={handleInput}
-                            value={newPost.description}
-                            name="description"
+                            value={newPost.content}
+                            name="content"
                         />
                     </div>
                     <div className="mb-3">
@@ -213,11 +194,12 @@ function Main() {
                             <div className="mb-3 form-check" key={tag}>
                                 <input
                                     type="checkbox"
-                                    className="form-check-input"
+                                    className="form-check-input tag-checkbox"
                                     id="avaiable"
                                     name="available"
                                     onChange={handleTags}
                                     value={tag}
+
                                 />
                                 <label className="form-check-label" htmlFor="avaiable">
                                     {tag}
@@ -228,14 +210,12 @@ function Main() {
                     <input
                         type="checkbox"
                         className="form-check-input"
-                        id="status"
-                        name="status"
+                        id="published"
+                        name="published"
                         onChange={
-                            handleCheckboxChange
-
-
+                            handleInput
                         }
-                        checked={newPost.status}
+                        checked={newPost.published}
 
                     />
                     <label className="form-check-label ms-1" htmlFor="status">
