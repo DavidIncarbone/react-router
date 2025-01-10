@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import Card from "../components/Card"
 import axios from "axios";
+import Form from "../components/Form"
 
 // ADD POST
-
-
 
 const initialNewPost = {
 
@@ -17,7 +16,8 @@ const initialNewPost = {
 
 };
 
-const options = ["Cinema", "Calcio", "Viaggi"];
+
+
 const postsAPI = "http://localhost:3000/posts";
 const tagsAPI = "http://localhost:3000/tags"
 
@@ -31,7 +31,7 @@ function Main() {
     //GET DATA
     useEffect(() => {
         getData();
-        getTags();
+        getTags()
 
     }, [])
 
@@ -58,7 +58,7 @@ function Main() {
     //DELETE
     function deleteItem(id) {
         axios.delete(postsAPI + "/" + id).then(() => getData());
-        //setMyPosts(myPosts.filter((post) => post.id !== id))
+
     }
 
     //HANDLE
@@ -134,99 +134,7 @@ function Main() {
             </ul>
             <section className="my-4 ms-4">
                 <h2>Aggiungi nuovo post</h2>
-                <form onSubmit={() => (handleSubmit(event))} className="w-50">
-                    <div className="mb-3">
-                        <label htmlFor="title" className="form-label">
-                            Title
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="title"
-                            aria-describedby="titlelHelp"
-                            onChange={handleInput}
-                            value={newPost.title}
-                            name="title"
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="content" className="form-label">
-                            Description
-                        </label>
-                        <input
-                            type="textarea"
-                            className="form-control"
-                            id="content"
-                            aria-describedby="contentlHelp"
-                            onChange={handleInput}
-                            value={newPost.content}
-                            name="content"
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="image" className="form-label">
-                            Image
-                        </label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="image"
-                            aria-describedby="imagelHelp"
-                            onChange={handleInput}
-                            value={newPost.image}
-                            name="image"
-                        />
-                    </div>
-                    <select className="form-select mb-3" aria-label="Default select example" type="textarea"
-                        id="category"
-                        aria-describedby="categorylHelp"
-                        onChange={handleInput}
-                        value={newPost.category}
-                        name="category">
-                        <option defaultValue>Scegli la categoria</option>
-                        {options.map((option) => {
-                            return (<option key={crypto.randomUUID()} value={option}>{option}</option>)
-                        })}
-                    </select>
-
-                    {filteredTags.map((tag) => {
-                        return (
-                            <div className="mb-3 form-check" key={tag}>
-                                <input
-                                    type="checkbox"
-                                    className="form-check-input tag-checkbox"
-                                    id="avaiable"
-                                    name="available"
-                                    onChange={handleTags}
-                                    value={tag}
-
-                                />
-                                <label className="form-check-label" htmlFor="avaiable">
-                                    {tag}
-                                </label>
-                            </div>
-                        )
-                    })}
-                    <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="published"
-                        name="published"
-                        onChange={
-                            handleInput
-                        }
-                        checked={newPost.published}
-
-                    />
-                    <label className="form-check-label ms-1" htmlFor="status">
-                        Pubblica
-                    </label>
-
-
-                    <button type="submit" className="btn btn-primary ms-3">
-                        Submit
-                    </button>
-                </form>
+                <Form handleSubmit={() => handleSubmit(event)} handleInput={() => handleInput(event)} handleTags={() => handleTags(event)} />
             </section>
 
 
