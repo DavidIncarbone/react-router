@@ -14,7 +14,7 @@ const initialNewPost = {
 
 
 const options = ["Cinema", "Calcio", "Viaggi"];
-export default function Form({ handleSubmit, handleInput, handleTags }) {
+export default function Form({ handleSubmit, handleInput, handleTags, handlePublish }) {
 
     const [newPost, setNewPost] = useState(initialNewPost);
     const [filteredTags, setFilteredTags] = useState([]);
@@ -114,9 +114,10 @@ export default function Form({ handleSubmit, handleInput, handleTags }) {
                 id="published"
                 name="published"
                 onChange={
-                    handleInput
+                    handlePublish
                 }
                 checked={newPost.published}
+                value={newPost.published}
 
             />
             <label className="form-check-label ms-1" htmlFor="status">

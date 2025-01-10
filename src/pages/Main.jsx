@@ -94,7 +94,7 @@ function Main() {
             }
         })
     }
-    const handleCheckboxChange = () => {
+    const handlePublish = () => {
         alert('Stai per pubblicare un post!');
         handleInput(event);
     };
@@ -122,7 +122,7 @@ function Main() {
                     .map((post) => {
                         return (
                             <Card title={post.title}
-                                description={post.content}
+                                description={post.content.substring(0, 100) + "..."}
                                 image={post.image}
                                 key={post.id}
                                 tags={post.tags}
@@ -134,7 +134,7 @@ function Main() {
             </ul>
             <section className="my-4 ms-4">
                 <h2>Aggiungi nuovo post</h2>
-                <Form handleSubmit={() => handleSubmit(event)} handleInput={() => handleInput(event)} handleTags={() => handleTags(event)} />
+                <Form handleSubmit={() => handleSubmit(event)} handleInput={() => handleInput(event)} handleTags={() => handleTags(event)} handlePublish={handlePublish} />
             </section>
 
 
