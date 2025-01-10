@@ -63,14 +63,17 @@ export default function AddPost() {
         event.preventDefault();
         setIsLoading(true);
         axios.post(postsAPI, newPost).then(() => {
-            getData();
+
             setNewPost(initialNewPost);
             document.querySelectorAll('.tag-checkbox').forEach((ch) => {
-                ch.checked = false
+                ch.checked = false;
             })
+
             setIsLoading(false);
             navigate("/posts");
-            ;
+
+
+
 
         }).catch((err) => {
             console.log(err)
