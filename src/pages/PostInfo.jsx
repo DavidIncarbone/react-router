@@ -8,28 +8,23 @@ export default function PostInfo() {
     const { id } = useParams();
     const [post, setPost] = useState({});
 
-    // 3
+
     useEffect(getInfo, [id])
 
     function getInfo() {
         axios.get(infoPostAPI + id).then((res) => {
-            // 4
+
             console.log(res.data.item)
             setPost(res.data.item)
-            console.log(post) // null
+            console.log(post)
         }).catch((error) => {
             console.log(error)
         })
             .finally(() => {
                 console.log("finally")
             });
-
     }
-
-    // 5 post =
-    console.log(post) // 1
-
-    // 2 post
+    console.log(post)
     return (
 
         <div id="container" className="container pb-5">

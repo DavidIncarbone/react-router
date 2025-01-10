@@ -3,6 +3,7 @@ import Main from "./pages/Main";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import PostInfo from "./pages/PostInfo";
+import AddPost from "./pages/AddPost";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css'
 function App() {
@@ -12,12 +13,13 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route Component={DefaultLayout}>
-            <Route path="/" Component={Home} />
-            <Route path="/about" Component={About} />
+          <Route element={<DefaultLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/posts">
-              <Route index Component={Main} />
-              <Route path=":id" Component={PostInfo} />
+              <Route index element={<Main />} />
+              <Route path="create" element={<AddPost />} />
+              <Route path=":id" element={<PostInfo />} />
             </Route>
 
           </Route>

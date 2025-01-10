@@ -1,22 +1,7 @@
 import { useState, useEffect } from "react";
-import Card from "../components/Card"
+import Card from "../components/Card";
 import axios from "axios";
-import Form from "../components/Form"
-
-// ADD POST
-
-const initialNewPost = {
-
-    title: "",
-    content: "",
-    image: "",
-    category: "",
-    tags: [],
-    published: false
-
-};
-
-
+import { Link } from "react-router-dom";
 
 const postsAPI = "http://localhost:3000/posts";
 const tagsAPI = "http://localhost:3000/tags"
@@ -24,7 +9,6 @@ const tagsAPI = "http://localhost:3000/tags"
 
 function Main() {
     const [myPosts, setMyPosts] = useState([]);
-    const [newPost, setNewPost] = useState(initialNewPost);
     const [postList, setPostList] = useState([]);
     const [filteredTags, setFilteredTags] = useState([]);
     // ***** FUNCTIONS *****
@@ -45,9 +29,6 @@ function Main() {
                 console.log(error)
             })
     }
-
-
-
     function getTags() {
         axios.get(tagsAPI).then((res) => {
             console.log(res.data)
@@ -101,11 +82,11 @@ function Main() {
 
 
     return (
-        <main className="d-flex flex-column">
+        <main>
 
-            <div className="w-25 ms-5">
+            {/* <div className="w-25 ms-5">
                 <h2 className="ps-1">Lista dei Tags</h2>
-                <ul>
+                <ul className="text-bg-dark">
                     {
                         filteredTags.map((tag, index) => {
                             return (
@@ -115,27 +96,30 @@ function Main() {
                         )
                     }
                 </ul>
-            </div >
+            </div > */}
 
-            <ul className="d-flex flex-wrap gap-5">
-                {myPosts.filter((post) => post.published)
-                    .map((post) => {
-                        return (
-                            <Card title={post.title}
-                                description={post.content.substring(0, 100) + "..."}
-                                image={post.image}
-                                key={post.id}
-                                tags={post.tags}
-                                id={post.id}
-                                onDelete={() => deleteItem(post.id)}
-                            />
-                        )
-                    })}
-            </ul>
-            <section className="my-4 ms-4">
-                <h2>Aggiungi nuovo post</h2>
-                <Form handleSubmit={() => handleSubmit(event)} handleInput={() => handleInput(event)} handleTags={() => handleTags(event)} handlePublish={handlePublish} />
-            </section>
+            <div className="d-flex justify-content-center py-3"><Link to={"/posts/create"} className="btn btn-warning">Crea Nuovo Post</Link></div>
+
+
+            <div className="container d-flex">
+
+                <ul className="d-flex flex-wrap gap-5">
+                    {myPosts.filter((post) => post.published)
+                        .map((post) => {
+                            return (
+                                <Card title={post.title}
+                                    description={post.content.substring(0, 100) + "..."}
+                                    image={post.image}
+                                    key={post.id}
+                                    tags={post.tags}
+                                    id={post.id}
+                                    onDelete={() => deleteItem(post.id)}
+                                />
+                            )
+                        })}
+                </ul>
+
+            </div>
 
 
         </main >
