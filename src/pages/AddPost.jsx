@@ -1,6 +1,7 @@
 import Form from "../components/Form";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const initialNewPost = {
 
@@ -23,7 +24,8 @@ export default function AddPost() {
     const [myPosts, setMyPosts] = useState([]);
     const [newPost, setNewPost] = useState(initialNewPost);
     const [filteredTags, setFilteredTags] = useState([]);
-    const tagsAPI = "http://localhost:3000/tags"
+    const tagsAPI = "http://localhost:3000/tags";
+    const navigate = useNavigate();
 
     function getData() {
         axios.get(postsAPI).then((res) => {
@@ -62,9 +64,12 @@ export default function AddPost() {
             setNewPost(initialNewPost);
             document.querySelectorAll('.tag-checkbox').forEach((ch) => {
                 ch.checked = false
+                navigate("/posts");
             });
 
         })
+
+
 
     }
     function handleTags(event) {
