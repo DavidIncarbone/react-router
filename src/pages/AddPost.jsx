@@ -91,7 +91,7 @@ export default function AddPost() {
     };
 
     return (
-        <section className="my-4 ms-4">
+        <section className="my-4 ms-4 ">
             <h2>Aggiungi nuovo post</h2>
             <form onSubmit={handleSubmit} className="w-50">
                 <div className="mb-3">

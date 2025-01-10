@@ -98,7 +98,9 @@ function Main() {
                 </ul>
             </div > */}
 
-            <div className="d-flex justify-content-center py-3"><Link to={"/posts/create"} className="btn btn-warning">Crea Nuovo Post</Link></div>
+            <div className="d-flex justify-content-center py-3">
+                <Link to={"/posts/create"} className="btn btn-warning">Crea Nuovo Post</Link>
+            </div>
 
 
             <div className="container d-flex">

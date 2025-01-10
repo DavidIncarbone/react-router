@@ -5,6 +5,7 @@ import About from "./pages/About";
 import PostInfo from "./pages/PostInfo";
 import AddPost from "./pages/AddPost";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Error from "./pages/Error";
 import './App.css'
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
             </Route>
 
           </Route>
+          <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
 
