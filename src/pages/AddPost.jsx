@@ -66,10 +66,11 @@ export default function AddPost() {
             getData();
             setNewPost(initialNewPost);
             document.querySelectorAll('.tag-checkbox').forEach((ch) => {
-                ch.checked = false;
-                setIsLoading(false);
-                navigate("/posts");
-            });
+                ch.checked = false
+            })
+            setIsLoading(false);
+            navigate("/posts");
+            ;
 
         }).catch((err) => {
             console.log(err)
