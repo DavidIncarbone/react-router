@@ -28,13 +28,13 @@ export default function PostInfo() {
     return (
 
         <div id="container" className="container pb-5">
-            <h2 className="text-center py-3 text-bg-danger">{post.title}</h2>
+            <h2 className="text-center py-1 text-bg-danger">{post.title}</h2>
+            <h5 className="text-center">Descrizione</h5>
             <div id="info-img-container" className="w-25 me-3">
                 <img id="info-post" src={post.image} alt={post.title} />
             </div>
-            <div className="my-3">
-                <h5 className="text-center">Descrizione</h5>
-                <p className="ms-3">{post.content}
+            <div >
+                <p>{post.content}
                 </p>
             </div>
         </div>

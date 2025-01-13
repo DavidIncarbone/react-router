@@ -61,25 +61,23 @@ export default function AddPost() {
     }
     function handleSubmit(event) {
         event.preventDefault();
-        setIsLoading(true);
-        axios.post(postsAPI, newPost).then(() => {
+        setIsLoading(false);
+        document.getElementById("form-post").reset();
+        const published = document.getElementById("published");
+        !published.checked
+            ? (alert("Cliccare su `Pubblica` per pubblicare il post"), setIsLoading(false))
 
-            setNewPost(initialNewPost);
-            document.querySelectorAll('.tag-checkbox').forEach((ch) => {
-                ch.checked = false;
+            :
+
+            axios.post(postsAPI, newPost).then(() => {
+                setNewPost(initialNewPost);
+                setIsLoading(false);
+                navigate("/posts");
+            }).catch((err) => {
+                console.log(err)
+            }).finally(() => {
+                setIsLoading(false);
             })
-
-            setIsLoading(false);
-            navigate("/posts");
-
-
-
-
-        }).catch((err) => {
-            console.log(err)
-        }).finally(() => {
-            setIsLoading(false);
-        })
 
 
 
@@ -98,7 +96,8 @@ export default function AddPost() {
         })
     }
     const handlePublish = () => {
-        alert('Stai per pubblicare un post!');
+        event.target.checked &&
+            alert('Stai per pubblicare un post!');
         handleInput(event);
     };
 
@@ -107,8 +106,8 @@ export default function AddPost() {
         <>
             {isLoading && <Loader />}
             <section className="my-4 ms-4 ">
-                <h2>Aggiungi nuovo post</h2>
-                <form onSubmit={handleSubmit} className="w-50">
+                <h2 className="text-center">Aggiungi nuovo post</h2>
+                <form onSubmit={handleSubmit} id="form-post" className="w-50 m-auto p-3">
                     <div className="mb-3">
                         <label htmlFor="title" className="form-label">
                             Title
@@ -128,7 +127,7 @@ export default function AddPost() {
                             Description
                         </label>
                         <input
-                            type="textarea"
+                            type="text"
                             className="form-control"
                             id="content"
                             aria-describedby="contentlHelp"
@@ -162,45 +161,49 @@ export default function AddPost() {
                             return (<option key={crypto.randomUUID()} value={option}>{option}</option>)
                         })}
                     </select>
+                    <div className="border border-2 p-1">
+                        {filteredTags.map((tag) => {
+                            return (
+                                <div className="mb-3 form-check " >
+                                    <input key={tag}
+                                        type="checkbox"
+                                        className="form-check-input tag-checkbox"
+                                        id="avaiable"
+                                        name="available"
+                                        onChange={handleTags}
+                                        value={tag}
 
-                    {filteredTags.map((tag) => {
-                        return (
-                            <div className="mb-3 form-check" key={tag}>
-                                <input
-                                    type="checkbox"
-                                    className="form-check-input tag-checkbox"
-                                    id="avaiable"
-                                    name="available"
-                                    onChange={handleTags}
-                                    value={tag}
+                                    />
+                                    <label className="form-check-label" htmlFor="avaiable">
+                                        {tag}
+                                    </label>
+                                </div>
+                            )
+                        })}
+                    </div>
+                    <div className="d-flex justify-content-center align-items-center">
+                        <div className="d-flex mt-2 ">
+                            <input
+                                type="checkbox"
+                                className="form-check-input "
+                                id="published"
+                                name="published"
+                                onChange={
+                                    handlePublish
+                                }
+                                checked={newPost.published}
+                                value={newPost.published}
 
-                                />
-                                <label className="form-check-label" htmlFor="avaiable">
-                                    {tag}
-                                </label>
-                            </div>
-                        )
-                    })}
-                    <input
-                        type="checkbox"
-                        className="form-check-input"
-                        id="published"
-                        name="published"
-                        onChange={
-                            handlePublish
-                        }
-                        checked={newPost.published}
-                        value={newPost.published}
+                            />
+                            <label className="form-check-label ms-1" htmlFor="status">
+                                Pubblica
+                            </label>
+                        </div>
 
-                    />
-                    <label className="form-check-label ms-1" htmlFor="status">
-                        Pubblica
-                    </label>
-
-
-                    <button type="submit" className="btn btn-primary ms-3">
-                        Submit
-                    </button>
+                        <button type="submit" className="btn btn-primary ms-3 mt-3">
+                            Submit
+                        </button>
+                    </div>
                 </form>
             </section>
         </>
